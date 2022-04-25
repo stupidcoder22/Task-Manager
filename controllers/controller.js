@@ -2,8 +2,8 @@ const Task = require("../model/taskmodel");
 
 const getAlltask = async (req, res) => {
   try {
-    const data = await Task.find();
-    res.status(200).send({ msg: data });
+    const tasks = await Task.find();
+    res.status(200).send({ tasks });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -35,16 +35,16 @@ const getTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const resp = await Task.updateOne({ _id: req.params.id }, req.body, {
+    const tasks = await Task.updateOne({ _id: req.params.id }, req.body, {
       new: true,
       runValidators: true,
     });
-    if (!resp) {
+    if (!tasks) {
       return res
         .status(404)
         .json({ msg: `no task with id : ${req.params.id}` });
     }
-    res.status(200).json({ msg: resp });
+    res.status(200).json({ tasks });
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -52,9 +52,9 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    const resp = await Task.deleteOne({ _id: req.params.id });
+    const tasks = await Task.deleteOne({ _id: req.params.id });
 
-    if (!resp) {
+    if (!tasks) {
       return res.status(404).json({ msg: "no id has been found" });
     }
     res
