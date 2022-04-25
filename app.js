@@ -5,10 +5,8 @@ const dbconnect = require("./db/connect");
 
 dbconnect();
 app.use(express.json());
+app.use(express.static("./public"));
 app.use("/api/v1/tasks", route);
-app.get("/", (req, res) => {
-  res.send("it is working");
-});
 
 app.listen(1000, () => {
   console.log("Server is litening on Port 1000");
